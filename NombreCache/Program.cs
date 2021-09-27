@@ -11,20 +11,20 @@ namespace NombreCache
 {
     class Program
     {
-        static void Main(string[] args)
+
+
+        //Module de saisie
+        static int saisie(string message, int borneMin, int borneMax)
         {
-            // Déclarations
-            int valeur = 0, essai, nbre = 1;
+            int nombre = 0;
             bool correct = false;
 
-            // Saisie du nombre à chercher
-
-            while (!correct)
+            while (!correct || nombre < borneMin || nombre > borneMax)
             {
                 try
                 {
-                    Console.Write("Entrez le nombre à chercher = ");
-                    valeur = int.Parse(Console.ReadLine());
+                    Console.Write(message + " (entre " + borneMin + " et " + borneMax + ") = ");
+                    nombre = int.Parse(Console.ReadLine());
                     correct = true;
                 }
                 catch
@@ -32,11 +32,22 @@ namespace NombreCache
                     Console.WriteLine("Erreur de saisie : saisissez un nombre entier");
                 }
             }
+            return nombre;
+        }
+        
+        static void Main(string[] args)
+        {
+            // Déclarations
+            int valeur = 0, nbre = 1, essai = 0, min = 1, max =100;
+
+
+            // Saisie du nombre à chercher
+            valeur = saisie("Entrez le nombre à chercher", min, max);
+
             Console.Clear();
 
             //Saisie du premier essai
-            Console.Write("Entrez le nombre à chercher = ");
-            essai = int.Parse(Console.ReadLine());
+            essai = saisie("Entrez un essai", min, max);
 
             //Boucle sur la vérification de la reponse
             while (essai!= valeur)
@@ -52,20 +63,7 @@ namespace NombreCache
                 }
 
                 //Saisie d'un nouvel essai
-                correct = false;
-                while (!correct)
-                {
-                    try
-                    {
-                        Console.Write("Entrez le nombre à chercher = ");
-                        essai = int.Parse(Console.ReadLine());
-                        correct = true;
-                    }
-                    catch
-                    {
-                        Console.WriteLine("Erreur de saisie : saisissez un nombre entier");
-                    }
-                }
+                essai = saisie("Entrez un essai", min, max);
                 
                
                 //Compeur d'essais
